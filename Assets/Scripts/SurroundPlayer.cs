@@ -91,4 +91,10 @@ public class SurroundPlayer : MonoBehaviour
             yield return null;
         }
     }
+    
+    public void SetupAgent(int index, int total)
+    {
+        agentIndex = index;
+        totalAgents = total;
+    }
 }

@@ -6,13 +6,14 @@ using UnityEngine;
 public class NPCDialogueManager : MonoBehaviour
 {
     public string dialogueFolder = "DialogueFiles"; // Folder name for storing NPC dialogue files
+    [SerializeField] private GameObject[] npcPrefabs;
     private Dictionary<int, string[]> npcDialogueLines = new Dictionary<int, string[]>(); // Dictionary to store dialogue lines for each NPC
     private int npcCount = 0; // Number of NPCs found
 
     void Start()
     {
         LoadDialogueFiles();
-        CreateNPCs();
+        StartCoroutine(CreateNPCs());
     }
 
     void LoadDialogueFiles()
@@ -39,14 +40,28 @@ public class NPCDialogueManager : MonoBehaviour
             npcCount++;
         }
     }
-
-    void CreateNPCs()
+    
+    public GameObject GetPrefabForDictionaryItem(int dictionaryIndex)
     {
-        Debug.Log(npcDialogueLines.Count);
-        
+        // Calculate which prefab to use based on the current dictionary index
+        int prefabIndex = (dictionaryIndex * npcPrefabs.Length) / npcDialogueLines.Count;
+
+        // Return the selected prefab
+        return npcPrefabs[prefabIndex];
+    }
+
+    IEnumerator CreateNPCs()
+    {
         for (int i = 0; i < npcCount; i++)
         {
-            
+            // find a random position in a circle around this object
+            int spawnRadius = 10;
+            Vector3 position = (Vector3)(Random.insideUnitCircle.normalized*spawnRadius)+transform.position;
+            position.y = 0;
+            GameObject obj = Instantiate(GetPrefabForDictionaryItem(i), position, Quaternion.identity);
+            obj.GetComponent<SurroundPlayer>().SetupAgent(i, npcCount);
+
+            yield return new WaitForSeconds(5);
         }
     }
 }
