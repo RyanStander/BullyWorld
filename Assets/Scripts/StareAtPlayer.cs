@@ -6,7 +6,7 @@ using UnityEngine;
 public class StareAtPlayer : MonoBehaviour
 {
     [SerializeField] private Transform head;
-    [SerializeField] private Transform player;
+    private Transform player;
     [SerializeField] private Vector3 lookAtOffset;
     [SerializeField] private float maxAngle = 90f;
     [SerializeField] private float turnSpeed = 5f;
@@ -17,9 +17,6 @@ public class StareAtPlayer : MonoBehaviour
     {
         if (head == null)
             head = GetComponent<Transform>();
-
-        if (player == null)
-            player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     private void Start()

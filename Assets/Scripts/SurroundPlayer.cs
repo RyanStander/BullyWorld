@@ -9,7 +9,7 @@ public class SurroundPlayer : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private CapsuleCollider agentCollider;
-    [SerializeField] private Transform player;
+    private Transform player;
     [SerializeField] private float baseDistanceFromPlayer = 2f;
     [SerializeField] private int agentIndex; // Unique index for each agent
     [SerializeField] private int totalAgents; // Total number of agents encircling the player
@@ -24,13 +24,13 @@ public class SurroundPlayer : MonoBehaviour
 
         if (agentCollider == null)
             agentCollider = GetComponent<CapsuleCollider>();
-
-        if (player == null)
-            player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     private void Start()
     {
+        if (player == null)
+            player = GameObject.FindGameObjectWithTag("Player").transform;
+        
         EncirclePlayer();
     }
 
