@@ -48,6 +48,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7823293702887809713, guid: a7f9f934c42ef7c4e86e7e1d5032fc11, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3b84a14089110804ea11db64fded9d77, type: 2}
+    - target: {fileID: -6138923895777843317, guid: a7f9f934c42ef7c4e86e7e1d5032fc11, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3b84a14089110804ea11db64fded9d77, type: 2}
+    - target: {fileID: -1781356600409242780, guid: a7f9f934c42ef7c4e86e7e1d5032fc11, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a7f9f934c42ef7c4e86e7e1d5032fc11, type: 3}
       propertyPath: m_Name
       value: Remy
@@ -55,6 +67,26 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: a7f9f934c42ef7c4e86e7e1d5032fc11, type: 3}
       propertyPath: m_TagString
       value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: a7f9f934c42ef7c4e86e7e1d5032fc11, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3b84a14089110804ea11db64fded9d77, type: 2}
+    - target: {fileID: 2321523695958950486, guid: a7f9f934c42ef7c4e86e7e1d5032fc11, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3b84a14089110804ea11db64fded9d77, type: 2}
+    - target: {fileID: 4123177642777943866, guid: a7f9f934c42ef7c4e86e7e1d5032fc11, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3b84a14089110804ea11db64fded9d77, type: 2}
+    - target: {fileID: 5128063986421979777, guid: a7f9f934c42ef7c4e86e7e1d5032fc11, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3b84a14089110804ea11db64fded9d77, type: 2}
+    - target: {fileID: 6657560127643677590, guid: a7f9f934c42ef7c4e86e7e1d5032fc11, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
