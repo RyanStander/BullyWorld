@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class SurroundPlayer : MonoBehaviour
 {
@@ -13,7 +14,9 @@ public class SurroundPlayer : MonoBehaviour
     [SerializeField] private float baseDistanceFromPlayer = 2f;
     [SerializeField] private int agentIndex; // Unique index for each agent
     [SerializeField] private int totalAgents; // Total number of agents encircling the player
-
+    [SerializeField] private int totalAnims = 8;
+    [SerializeField] private Animator anim;
+    
     private bool startedRotating = false;
     private string[] npcDialogueLines;
     
@@ -24,6 +27,9 @@ public class SurroundPlayer : MonoBehaviour
 
         if (agentCollider == null)
             agentCollider = GetComponent<CapsuleCollider>();
+        
+        if (anim == null)
+            anim = GetComponent<Animator>();
     }
 
     private void Start()
@@ -99,9 +105,17 @@ public class SurroundPlayer : MonoBehaviour
         totalAgents = total;
         npcDialogueLines = npcLines;
     }
+
+    public bool IsStillWalking()
+    {
+        return agent.velocity.magnitude > 0.1f;
+    }
     
     public string GetRandomDialogueLine()
     {
+        anim.SetInteger("Action",+Random.Range(0, totalAnims));
+        anim.SetTrigger("PlayAction");
+        
         return npcDialogueLines[UnityEngine.Random.Range(0, npcDialogueLines.Length)];
     }
 }

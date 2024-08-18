@@ -51,6 +51,9 @@ public class GetInsulted : MonoBehaviour
                     continue;
                 }
                 
+                if(dialogueLine.IsStillWalking())
+                    continue;
+                
                 // Convert NPC position to screen position
                 Vector3 screenPosition = mainCamera.WorldToScreenPoint(npc.transform.position);
 
