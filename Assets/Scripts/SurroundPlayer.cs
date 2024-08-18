@@ -15,6 +15,7 @@ public class SurroundPlayer : MonoBehaviour
     [SerializeField] private int totalAgents; // Total number of agents encircling the player
 
     private bool startedRotating = false;
+    private string[] npcDialogueLines;
     
     private void OnValidate()
     {
@@ -92,9 +93,15 @@ public class SurroundPlayer : MonoBehaviour
         }
     }
     
-    public void SetupAgent(int index, int total)
+    public void SetupAgent(string[] npcLines,int index, int total)
     {
         agentIndex = index;
         totalAgents = total;
+        npcDialogueLines = npcLines;
+    }
+    
+    public string GetRandomDialogueLine()
+    {
+        return npcDialogueLines[UnityEngine.Random.Range(0, npcDialogueLines.Length)];
     }
 }

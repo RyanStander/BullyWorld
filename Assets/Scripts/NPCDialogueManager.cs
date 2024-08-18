@@ -7,7 +7,12 @@ public class NPCDialogueManager : MonoBehaviour
 {
     public string dialogueFolder = "DialogueFiles"; // Folder name for storing NPC dialogue files
     [SerializeField] private GameObject[] npcPrefabs;
-    private Dictionary<int, string[]> npcDialogueLines = new Dictionary<int, string[]>(); // Dictionary to store dialogue lines for each NPC
+    [SerializeField] private float spawnRadius = 10f;
+    [SerializeField] private float spawnInterval = 5f;
+
+    private Dictionary<int, string[]>
+        npcDialogueLines = new Dictionary<int, string[]>(); // Dictionary to store dialogue lines for each NPC
+
     private int npcCount = 0; // Number of NPCs found
 
     void Start()
@@ -19,7 +24,7 @@ public class NPCDialogueManager : MonoBehaviour
     void LoadDialogueFiles()
     {
         // Determine the correct path based on whether we are in the Unity Editor or a build
-        string path = Application.dataPath +"/"+ dialogueFolder;
+        string path = Application.dataPath + "/" + dialogueFolder;
 
         if (!Directory.Exists(path))
         {
@@ -40,7 +45,7 @@ public class NPCDialogueManager : MonoBehaviour
             npcCount++;
         }
     }
-    
+
     public GameObject GetPrefabForDictionaryItem(int dictionaryIndex)
     {
         // Calculate which prefab to use based on the current dictionary index
@@ -55,13 +60,12 @@ public class NPCDialogueManager : MonoBehaviour
         for (int i = 0; i < npcCount; i++)
         {
             // find a random position in a circle around this object
-            int spawnRadius = 10;
-            Vector3 position = (Vector3)(Random.insideUnitCircle.normalized*spawnRadius)+transform.position;
+            Vector3 position = (Vector3)(Random.insideUnitCircle.normalized * spawnRadius) + transform.position;
             position.y = 0;
             GameObject obj = Instantiate(GetPrefabForDictionaryItem(i), position, Quaternion.identity);
-            obj.GetComponent<SurroundPlayer>().SetupAgent(i, npcCount);
+            obj.GetComponent<SurroundPlayer>().SetupAgent(npcDialogueLines[i],i, npcCount);
 
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(spawnInterval);
         }
     }
 }

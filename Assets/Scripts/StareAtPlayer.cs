@@ -24,6 +24,9 @@ public class StareAtPlayer : MonoBehaviour
 
     private void Start()
     {
+        if (player == null)
+            player = GameObject.FindGameObjectWithTag("Player").transform;
+        
         // Store the original rotation of the head
         originalRotation = head.localRotation;
     }
