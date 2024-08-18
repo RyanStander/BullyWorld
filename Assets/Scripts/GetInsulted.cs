@@ -9,6 +9,7 @@ public class GetInsulted : MonoBehaviour
     [SerializeField] private Camera mainCamera;
     [SerializeField] private float insultInterval = 10f;
     [SerializeField] private float removeInsultAfter = 5f;
+    [SerializeField] private float maxDistance = 3f;
     private float insultTimestamp;
 
     private void Update()
@@ -41,6 +42,15 @@ public class GetInsulted : MonoBehaviour
             SurroundPlayer dialogueLine = npc.GetComponent<SurroundPlayer>();
             if (dialogueLine != null)
             {
+                // Calculate the distance from the player to the NPC
+                float distanceToPlayer = Vector3.Distance(transform.position, npc.transform.position);
+
+                // Ignore NPCs that are further than the maximum distance
+                if (distanceToPlayer > maxDistance)
+                {
+                    continue;
+                }
+                
                 // Convert NPC position to screen position
                 Vector3 screenPosition = mainCamera.WorldToScreenPoint(npc.transform.position);
 

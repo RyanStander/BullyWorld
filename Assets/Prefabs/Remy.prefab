@@ -84,6 +84,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 3b84a14089110804ea11db64fded9d77, type: 2}
+    - target: {fileID: 5866666021909216657, guid: a7f9f934c42ef7c4e86e7e1d5032fc11, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: af45f8672b6b9bf48a51458426c4d41d, type: 2}
     - target: {fileID: 6657560127643677590, guid: a7f9f934c42ef7c4e86e7e1d5032fc11, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -101,6 +105,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a7f9f934c42ef7c4e86e7e1d5032fc11, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2814077610147820697}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a7f9f934c42ef7c4e86e7e1d5032fc11, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4232611276215502727}
     - targetCorrespondingSourceObject: {fileID: -1781356600409242780, guid: a7f9f934c42ef7c4e86e7e1d5032fc11, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4588573678069336643}
@@ -129,6 +136,11 @@ MonoBehaviour:
 --- !u!4 &2392504429111684795 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -3321919801592875672, guid: a7f9f934c42ef7c4e86e7e1d5032fc11, type: 3}
+  m_PrefabInstance: {fileID: 8130626323698179027}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &2431763726818928194 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: a7f9f934c42ef7c4e86e7e1d5032fc11, type: 3}
   m_PrefabInstance: {fileID: 8130626323698179027}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &8940947364046530178 stripped
@@ -163,7 +175,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.26
-  m_Speed: 3.5
+  m_Speed: 0.85
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -198,3 +210,18 @@ CapsuleCollider:
   m_Height: 1.96
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &4232611276215502727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8940947364046530178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbf942ed352f1dd479508bfc5b017a4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 2431763726818928194}
+  agent: {fileID: 8489542065154688148}
+  blendSpeed: 0.5
