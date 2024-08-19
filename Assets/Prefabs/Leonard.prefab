@@ -120,11 +120,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 1895809373197777446}
   agentCollider: {fileID: 3555858974266869357}
-  baseDistanceFromPlayer: 2
   agentIndex: 1
   totalAgents: 7
+  extraSpacing: 0.5
   totalAnims: 8
   anim: {fileID: 6330002670157926068}
+  collisionAvoidanceRadius: 1
+  checkInterval: 0.5
 --- !u!114 &6201322876813706335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,7 +154,7 @@ NavMeshAgent:
   m_Radius: 0.26
   m_Speed: 0.85
   m_Acceleration: 8
-  avoidancePriority: 50
+  avoidancePriority: 10
   m_AngularSpeed: 120
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1

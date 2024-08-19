@@ -8,6 +8,7 @@ public class NPCDialogueManager : MonoBehaviour
     public string dialogueFolder = "DialogueFiles"; // Folder name for storing NPC dialogue files
     [SerializeField] private GameObject[] npcPrefabs;
     [SerializeField] private float spawnRadius = 10f;
+    [SerializeField] private float baseDistanceFromPlayer = 1f;
     [SerializeField] private float spawnInterval = 5f;
 
     private Dictionary<int, string[]>
@@ -63,7 +64,7 @@ public class NPCDialogueManager : MonoBehaviour
             Vector3 position = (Vector3)(Random.insideUnitCircle.normalized * spawnRadius) + transform.position;
             position.y = 0;
             GameObject obj = Instantiate(GetPrefabForDictionaryItem(i), position, Quaternion.identity);
-            obj.GetComponent<SurroundPlayer>().SetupAgent(npcDialogueLines[i],i, npcCount);
+            obj.GetComponent<SurroundPlayer>().SetupAgent(npcDialogueLines[i],i, npcCount,baseDistanceFromPlayer);
 
             yield return new WaitForSeconds(spawnInterval);
         }

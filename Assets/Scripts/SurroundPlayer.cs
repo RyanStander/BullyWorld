@@ -11,14 +11,20 @@ public class SurroundPlayer : MonoBehaviour
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private CapsuleCollider agentCollider;
     private Transform player;
-    [SerializeField] private float baseDistanceFromPlayer = 2f;
     [SerializeField] private int agentIndex; // Unique index for each agent
     [SerializeField] private int totalAgents; // Total number of agents encircling the player
+    [SerializeField] private float extraSpacing = 0.5f; // Extra spacing between agents
     [SerializeField] private int totalAnims = 8;
     [SerializeField] private Animator anim;
+    [SerializeField] private float collisionAvoidanceRadius = 0.3f; 
+    [SerializeField] private float checkInterval = 0.5f; // Time interval between checks
+    
+    private float nextCheckTime = 0f;
     
     private bool startedRotating = false;
+    private float baseDistanceFromPlayer = 2f;
     private string[] npcDialogueLines;
+    private Vector3 targetPosition;
     
     private void OnValidate()
     {
@@ -38,6 +44,7 @@ public class SurroundPlayer : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player").transform;
         
         EncirclePlayer();
+        nextCheckTime = Time.time + (checkInterval * agentIndex / totalAgents);
     }
 
     private void Update()
@@ -49,34 +56,62 @@ public class SurroundPlayer : MonoBehaviour
             //start couritine to rotate towards player
             StartCoroutine(RotateTowardsPlayer());
         }
+
+        if (Time.time >= nextCheckTime)
+        {
+            AvoidCollisions();
+            nextCheckTime = Time.time + checkInterval;
+        }
     }
 
     private void EncirclePlayer()
     {
-        // Calculate the minimum required distance based on the number of agents and their size
-        float colliderRadius = agentCollider.radius;
-        float angleStep = 360f / totalAgents;
-        float angleInRadians = Mathf.Deg2Rad * angleStep;
+        float colliderDiameter = agentCollider.radius * 2 + extraSpacing;
+        float currentRadius = baseDistanceFromPlayer;
+        int agentsPlaced = 0;
+        int agentsInCurrentCircle = 0;
 
-        // Ensure that the radius accounts for the size of the agents
-        float requiredRadius = (colliderRadius * 5) / (2 * Mathf.Sin(angleInRadians / 2));
-        float distanceFromPlayer = Mathf.Max(baseDistanceFromPlayer, requiredRadius);
+        while (agentsPlaced + agentsInCurrentCircle < agentIndex + 1)
+        {
+            float circumference = 2 * Mathf.PI * currentRadius;
+            agentsInCurrentCircle = Mathf.FloorToInt(circumference / colliderDiameter);
 
-        // Calculate the angle for this agent
-        float agentAngle = agentIndex * angleStep;
+            if (agentsPlaced + agentsInCurrentCircle > agentIndex)
+            {
+                break;
+            }
 
-        // Convert angle to radians
+            agentsPlaced += agentsInCurrentCircle;
+            currentRadius += colliderDiameter; // Increase radius for the next circle
+        }
+
+        int positionInCircle = agentIndex - agentsPlaced;
+        float angleStep = 360f / agentsInCurrentCircle;
+        float agentAngle = positionInCircle * angleStep;
         float agentAngleInRadians = agentAngle * Mathf.Deg2Rad;
 
-        // Calculate the target position based on the angle
-        float xOffset = Mathf.Cos(agentAngleInRadians) * distanceFromPlayer;
-        float zOffset = Mathf.Sin(agentAngleInRadians) * distanceFromPlayer;
+        float xOffset = Mathf.Cos(agentAngleInRadians) * currentRadius;
+        float zOffset = Mathf.Sin(agentAngleInRadians) * currentRadius;
 
-        Vector3 targetPosition =
-            new Vector3(player.position.x + xOffset, player.position.y, player.position.z + zOffset);
+        targetPosition = new Vector3(player.position.x + xOffset, player.position.y, player.position.z + zOffset);
 
-        // Set the agent's destination directly to the calculated target position
         agent.SetDestination(targetPosition);
+    }
+    
+    private void AvoidCollisions()
+    {
+        foreach (var otherAgent in FindObjectsOfType<NavMeshAgent>())
+        {
+            if (otherAgent == agent) continue;
+
+            if (Vector3.Distance(otherAgent.transform.position, targetPosition) < collisionAvoidanceRadius)
+            {
+                // Adjust target position slightly to avoid collision
+                Vector3 direction = (targetPosition - player.position).normalized;
+                targetPosition += direction * extraSpacing; // Move slightly away
+                agent.SetDestination(targetPosition);
+            }
+        }
     }
 
     private IEnumerator RotateTowardsPlayer()
@@ -99,8 +134,9 @@ public class SurroundPlayer : MonoBehaviour
         }
     }
     
-    public void SetupAgent(string[] npcLines,int index, int total)
+    public void SetupAgent(string[] npcLines,int index, int total, float baseDistance)
     {
+        baseDistanceFromPlayer = baseDistance;
         agentIndex = index;
         totalAgents = total;
         npcDialogueLines = npcLines;
