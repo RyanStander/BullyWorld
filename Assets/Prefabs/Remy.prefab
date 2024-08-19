@@ -165,6 +165,8 @@ MonoBehaviour:
   baseDistanceFromPlayer: 2
   agentIndex: 1
   totalAgents: 7
+  totalAnims: 8
+  anim: {fileID: 2431763726818928194}
 --- !u!195 &8489542065154688148
 NavMeshAgent:
   m_ObjectHideFlags: 0
