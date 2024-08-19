@@ -9,6 +9,7 @@ using Random = UnityEngine.Random;
 public class SurroundPlayer : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent agent;
+    [SerializeField] private NavMeshObstacle obstacle;
     [SerializeField] private CapsuleCollider agentCollider;
     private Transform player;
     [SerializeField] private int agentIndex; // Unique index for each agent
@@ -30,6 +31,9 @@ public class SurroundPlayer : MonoBehaviour
     {
         if (agent == null)
             agent = GetComponent<NavMeshAgent>();
+        
+        if (obstacle == null)
+            obstacle = GetComponent<NavMeshObstacle>();
 
         if (agentCollider == null)
             agentCollider = GetComponent<CapsuleCollider>();
@@ -50,8 +54,10 @@ public class SurroundPlayer : MonoBehaviour
     private void Update()
     {
         // Check if the agent has reached its destination
-        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance && !startedRotating)
+        if (agent.enabled && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance && !startedRotating)
         {
+            agent.enabled = false;
+            obstacle.enabled = true;
             startedRotating = true;
             //start couritine to rotate towards player
             StartCoroutine(RotateTowardsPlayer());
@@ -109,6 +115,9 @@ public class SurroundPlayer : MonoBehaviour
                 // Adjust target position slightly to avoid collision
                 Vector3 direction = (targetPosition - player.position).normalized;
                 targetPosition += direction * extraSpacing; // Move slightly away
+                agent.enabled = true;
+                obstacle.enabled = false;
+                startedRotating = false;
                 agent.SetDestination(targetPosition);
             }
         }
