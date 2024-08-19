@@ -748,7 +748,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   head: {fileID: 3659850035896396040}
   lookAtOffset: {x: 0, y: -0.42, z: 0}
-  maxAngle: 90
   turnSpeed: 5
 --- !u!1 &2240373889079880858
 GameObject:
@@ -1295,7 +1294,7 @@ MonoBehaviour:
   extraSpacing: 0.5
   totalAnims: 8
   anim: {fileID: 8225707370303737667}
-  collisionAvoidanceRadius: 1
+  collisionAvoidanceRadius: 0.5
   checkInterval: 0.5
 --- !u!114 &3941272207642697618
 MonoBehaviour:
@@ -1369,7 +1368,7 @@ NavMeshObstacle:
   m_Shape: 0
   m_Extents: {x: 0.28, y: 0.98, z: 0.28}
   m_MoveThreshold: 0.1
-  m_Carve: 0
+  m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 1, z: 0}
   m_TimeToStationary: 0.5

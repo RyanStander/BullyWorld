@@ -56,6 +56,11 @@ public class SurroundPlayer : MonoBehaviour
         // Check if the agent has reached its destination
         if (agent.enabled && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance && !startedRotating)
         {
+            if (Time.time >= nextCheckTime)
+            {
+                agent.SetDestination(targetPosition);
+            }
+
             agent.enabled = false;
             obstacle.enabled = true;
             startedRotating = true;

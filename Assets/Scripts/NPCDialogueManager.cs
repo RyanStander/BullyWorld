@@ -24,7 +24,6 @@ public class NPCDialogueManager : MonoBehaviour
 
     void LoadDialogueFiles()
     {
-        // Determine the correct path based on whether we are in the Unity Editor or a build
         string path = Application.dataPath + "/" + dialogueFolder;
 
         if (!Directory.Exists(path))

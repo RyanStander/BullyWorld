@@ -42,8 +42,8 @@ public class StareAtPlayer : MonoBehaviour
         Vector3 directionToPlayer = targetPosition - head.position;
 
         // Calculate the angle between the head's forward direction and the direction to the target position
-        float angleToPlayer = Vector3.Angle(head.forward, directionToPlayer);
-
+        float angleToPlayer = Vector3.Angle(head.parent.forward, directionToPlayer);
+        
         // If the player is within the max angle range
         if (angleToPlayer <= maxAngle)
         {
